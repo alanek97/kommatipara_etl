@@ -1,5 +1,7 @@
 # kommatipara Bitcoin ETL project
 
+[![CI](https://github.com/alanek97/kommatipara_etl/actions/workflows/main.yml/badge.svg)](https://github.com/alanek97/kommatipara_etl/actions/workflows/main.yml)
+
 ## Bash script
 ETL program for bitcoin datamart creation. Exctract 2 files, combine and save it. \
 Stored in *bitcoin_dm_creator.py* file.

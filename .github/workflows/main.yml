@@ -36,7 +36,10 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-      
+
+      - name: Install packages
+        run: pip install .
+
       # Runs a set of commands using the runners shell
       - name: Run unit tests
         run: python3 -m pytest tests
