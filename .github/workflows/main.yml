@@ -28,13 +28,17 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-  deployment:
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Install wheeel package
         run: pip install .
-  test:
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Run unit tests
-        run: python3 -m pytest tests
+        run: python3 -m pytest tests --doctest-modules --junitxml=./unit_test_bitcoin.xml
+
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest unit test results
+          path: ./unit_test_bitcoin.xml
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }
