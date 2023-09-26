@@ -39,16 +39,6 @@ import os
 
 # klasa_test().test()
 
-_path = './client_data.csv'
 
-
-
-batch_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-customer_path = './tests/data/dataset_one_test.csv'
-transation_path = './tests/data/dataset_two_test.csv'
-country_flags = "'United Kingdom' 'Netherlands'"
-
-os.system(f'python3 {batch_path}/src/bitcoin_dm_creator.py -c "{customer_path}" -t "{transation_path}" -f {country_flags}')
-
-
-
+import argparse
+print(argparse.__version__)

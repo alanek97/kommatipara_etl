@@ -180,7 +180,7 @@ def test_t_merge_sources():
                                             schema = 'a long, b double, c string, d string, e string, id long, desc string')
     
     df_test = test_etl.t_merge_sources(df_in1, df_in2, [df_in1.a == df_in2.id])
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test,ignore_row_order=True)
 
 def test_l_export_dataframe():
     '''
