@@ -4,3 +4,4 @@ __pycache__/
 client_data.csv
 .pytest_cache/
 tests/__pycache__/
+build/

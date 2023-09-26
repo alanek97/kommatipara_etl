@@ -43,4 +43,4 @@ class SetupKommatiPara():
         encoding = 'UTF-8',
         format="%(asctime)s | %(process)d | %(levelname)s | %(name)s | %(module)s  | %(funcName)s | %(message)s",
         datefmt='%d-%m-%y %H:%M:%S',
-        handlers=[TimedRotatingFileHandler(f'./logs/{job}.log', backupCount=5, when='D'), logging.StreamHandler()])
+        handlers=[TimedRotatingFileHandler(f'./{job}.log', backupCount=5, when='D'), logging.StreamHandler()])
