@@ -1,6 +1,4 @@
-
 name: CI
-
 
 on:
   push:
@@ -30,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Install wheeel package
+      - name: Install root package
         run: pip install .
 
       - name: Run unit tests
@@ -49,3 +47,18 @@ jobs:
         with:
           name: pytest unit test results
           path: ./Bitcoin_dm_log.log
+      
+      - name: Create distribution file
+        run: python3 setup.py bdist_wheel
+
+      - name: Validate folder with distribution file
+        run: ls ./dist/
+
+      - name: Check distribution file
+        run: check-wheel-contents ./dist/kommatipara*
+
+      - name: Download artifact from build job
+        uses: actions/upload-artifact@v3
+        with:
+          name: ETL kommatipara wheel file
+          path: ./dist/kommatipara*

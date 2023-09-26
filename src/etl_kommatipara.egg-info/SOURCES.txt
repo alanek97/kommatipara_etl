@@ -3,6 +3,7 @@ setup.py
 src/etl_kommatipara.egg-info/PKG-INFO
 src/etl_kommatipara.egg-info/SOURCES.txt
 src/etl_kommatipara.egg-info/dependency_links.txt
+src/etl_kommatipara.egg-info/requires.txt
 src/etl_kommatipara.egg-info/top_level.txt
 src/etl_source_code/__init__.py
 src/etl_source_code/etl_kommati_para.py
