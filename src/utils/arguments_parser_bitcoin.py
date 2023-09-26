@@ -2,6 +2,14 @@
 import argparse
 class BashArguments():
     def arg_j_bitcoin_dm(self) -> dict:
+        '''
+        Type of method: Bash arguments
+
+        This function sets up bash script arguments for j_bitcoin_datamart.
+
+        input: None
+        output: dict{'customer': str, 'transations': str, 'country_flags': str, 'location': str, 'debbug': str}
+        '''
         parser = argparse.ArgumentParser(
             prog='j_bitcoin_datamart',
             description='ETL program for bitcoin datamart creation. Exctract 2 files, combine and save it.')
