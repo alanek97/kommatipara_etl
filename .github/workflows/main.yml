@@ -41,4 +41,4 @@ jobs:
           name: pytest unit test results
           path: ./unit_test_bitcoin.xml
         # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }
+if: ${{ always() }}
