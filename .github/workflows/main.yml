@@ -28,15 +28,11 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-
-jobs:
   deployment:
   runs-on: ubuntu-latest
   steps:
       - name: Install wheeel package
         run: pip install .
-
-jobs:
   test:
   runs-on: ubuntu-latest
   steps:
