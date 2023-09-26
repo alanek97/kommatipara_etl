@@ -5,6 +5,10 @@ import pytest
 import chispa
 import os
 import shutil
+from source.etl_setup import SetupKommatiPara
+
+logger = SetupKommatiPara()
+logger.c_logging_setup('./logs/Bitcoin_dm_log')
 
 test_etl = ETLKommatiPara()
 

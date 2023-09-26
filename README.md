@@ -14,7 +14,7 @@ options:
   `-l LOCATION`, `--location LOCATION` Optional: path for output csv file (default: '.')\
   `-d`, `--debbug`, `--no-debbug` ebbug - set up more detail logging messages (default: False)
 
-# `etl_source_code` package
+# `source` package
 ## `etl_kommati_para` module
 ### `ETLKommatiPara(SetupKommatiPara)` class
 
@@ -28,7 +28,6 @@ options:
 | `l_export_dataframe` | Load | This function saves DataFrame to given location. | `df` DataFrame, `path` str | csv file | [PySpark docs](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrameWriter.save.html)
 | `j_bitcoin_datamart` | Job | This is coimbained function which exctract 2 files, transformed (select, rename, join) and save it as csv file. | `input_param` dict | csv file | `e_source_csv`, `t_select_columns`, `t_filter_isin_source`, `t_merge_sources`,  `t_rename_columns`, `l_export_dataframe`
 
-# `utils` package
 ## `etl_setup` module
 ### `SetupKommatiPara` class
 
