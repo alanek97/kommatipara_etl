@@ -5,7 +5,6 @@ with open('requirements.txt') as f:
 
 setup(
     name='etl_kommatipara',
-    packages=find_packages(where='src',include=['utils', 'etl_source_code']),
-    package_dir={"": "src"},
+    packages=find_packages(exclude=['tests']),
     install_requires=requirements
 )

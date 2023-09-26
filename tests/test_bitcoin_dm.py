@@ -1,5 +1,5 @@
 
-from etl_source_code.etl_kommati_para import ETLKommatiPara
+from source.etl_kommati_para import ETLKommatiPara
 from pyspark.sql import SparkSession
 import pytest
 import chispa
@@ -278,7 +278,7 @@ def test_Bitcoin_datamart_batch_1():
     transation_path = './tests/data/dataset_two_test.csv'
     country_flags = "'United Kingdom' 'Netherlands'"
 
-    os.system(f'python3 {batch_path}/src/bitcoin_dm_creator.py -c "{customer_path}" -t "{transation_path}" -f {country_flags}')
+    os.system(f'python3 {batch_path}/source/bitcoin_dm_creator.py -c "{customer_path}" -t "{transation_path}" -f {country_flags}')
 
     df_out = test_etl.spark.createDataFrame([('3', 'mail_3', 'Netherlands', '3', 'string_3', 'string_19'),
                                                 ('6', 'mail_6', 'Netherlands', '6', 'string_6', 'string_22'),
@@ -310,7 +310,7 @@ def test_Bitcoin_datamart_batch_2():
     country_flags = "'United Kingdom' 'Netherlands'"
     location = os.path.dirname(_path)
 
-    os.system(f'python3 {batch_path}/src/bitcoin_dm_creator.py -c "{customer_path}" -t "{transation_path}" -f {country_flags} -l {location} -d --debbug')
+    os.system(f'python3 {batch_path}/source/bitcoin_dm_creator.py -c "{customer_path}" -t "{transation_path}" -f {country_flags} -l {location} -d --debbug')
 
     df_out = test_etl.spark.createDataFrame([('3', 'mail_3', 'Netherlands', '3', 'string_3', 'string_19'),
                                                 ('6', 'mail_6', 'Netherlands', '6', 'string_6', 'string_22'),

@@ -1,6 +1,5 @@
-
-from etl_source_code.etl_kommati_para import ETLKommatiPara
-from utils.arguments_parser_bitcoin import BashArguments
+from source.etl_kommati_para import ETLKommatiPara
+from source.arguments_parser_bitcoin import BashArguments
 
 if __name__ == "__main__":
     args = BashArguments()

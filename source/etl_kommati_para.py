@@ -1,7 +1,6 @@
-
 from pyspark.sql import DataFrame, Column
 import logging
-from utils.etl_setup import SetupKommatiPara
+from source.etl_setup import SetupKommatiPara
 
 class ETLKommatiPara(SetupKommatiPara):
 

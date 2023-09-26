@@ -1,4 +1,3 @@
-
 import argparse
 class BashArguments():
     def arg_j_bitcoin_dm(self) -> dict:
