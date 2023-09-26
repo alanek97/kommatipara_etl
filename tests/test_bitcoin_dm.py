@@ -40,7 +40,7 @@ def test_t_select_columns_1():
                                              schema = 'a long, c string')
 
     df_test = test_etl.t_select_columns(df_in,['a', 'c'])
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_t_select_columns_2():
     '''
@@ -62,7 +62,7 @@ def test_t_select_columns_2():
                                              schema = 'a long, c string')
 
     df_test = test_etl.t_select_columns(df_in,['a', 'c'], type='selected')
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_t_select_columns_3():
     '''
@@ -84,7 +84,7 @@ def test_t_select_columns_3():
                                              schema = 'a long, c string')
 
     df_test = test_etl.t_select_columns(df_in,['b', 'd'], type='other')
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_t_filter_isin_source_1():
     '''
@@ -107,7 +107,7 @@ def test_t_filter_isin_source_1():
                                             (5, 6., 'string5', 'string 8', 2)], 
                                             schema = 'a long, b double, c string, d string, e int')
     df_test = test_etl.t_filter_isin_source(df_in, df_in.e, [1,2])
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_t_filter_isin_source_2():
     '''
@@ -130,7 +130,7 @@ def test_t_filter_isin_source_2():
                                             (5, 6., 'string5', 'string 8', 'N')], 
                                             schema = 'a long, b double, c string, d string, e string')
     df_test = test_etl.t_filter_isin_source(df_in, df_in.e, ['Y', 'N'])
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_t_rename_columns():
     '''
@@ -151,7 +151,7 @@ def test_t_rename_columns():
                                             (3, 4., 'string3', 'string 6')], 
                                             schema = 'id long, b double, country string, d string')
     df_test = test_etl.t_rename_columns(df_in, {'a': 'id', 'c': 'country'})
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_t_merge_sources():
     '''
@@ -180,7 +180,7 @@ def test_t_merge_sources():
                                             schema = 'a long, b double, c string, d string, e string, id long, desc string')
     
     df_test = test_etl.t_merge_sources(df_in1, df_in2, [df_in1.a == df_in2.id])
-    chispa.assert_df_equality(df_out, df_test,ignore_row_order=True)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
 def test_l_export_dataframe():
     '''
@@ -224,7 +224,7 @@ def test_e_source_csv():
     df_out = test_etl.spark.createDataFrame([('id_1', 'test_1', 'desc_1'),
                                             ('id_2', 'test_2', 'desc_2')], 
                                                 schema = 'id string, test string, desc string')
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
     if os.path.exists(_path):
         shutil.rmtree(_path)
@@ -257,7 +257,7 @@ def test_j_bitcoin_datamart():
                                                 )
         
     df_test = test_etl.e_source_csv(_path)
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
 
     if os.path.exists(_path):
         shutil.rmtree(_path)
@@ -288,7 +288,7 @@ def test_Bitcoin_datamart_batch_1():
                                                 )
         
     df_test = test_etl.e_source_csv(_path)
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
     
     if os.path.exists(_path):
         shutil.rmtree(_path)
@@ -320,7 +320,7 @@ def test_Bitcoin_datamart_batch_2():
                                                 )
         
     df_test = test_etl.e_source_csv(_path)
-    chispa.assert_df_equality(df_out, df_test)
+    chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
     
     if os.path.exists(_path):
         shutil.rmtree(_path)

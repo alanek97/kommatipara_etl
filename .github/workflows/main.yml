@@ -34,12 +34,20 @@ jobs:
         run: pip install .
 
       - name: Run unit tests
-        run: python3 -m pytest tests --doctest-modules --junitxml=./unit_test_bitcoin.xml
+        run: python3 -m pytest tests --doctest-modules --junitxml=./bitcoin_unittest_resoults.txt
 
-      - name: Upload pytest test results
+      - name: Upload artifact - pytest unit test results
+        if: always()
+        needs: [Run unit tests] 
         uses: actions/upload-artifact@v3
         with:
           name: pytest unit test results
-          path: ./unit_test_bitcoin.xml
-        # Use always() to always run this step to publish test results when there are test failures
-#if: ${{ always() }}
+          path: ./unit_test_bitcoin.txt
+
+      - name: Upload artifact - logging
+        if: always()
+        needs: [Run unit tests] 
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest unit test results
+          path: ./Bitcoin_dm_log.log
