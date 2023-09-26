@@ -41,15 +41,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Upload artifact - pytest unit test results
-        needs: [Run unit tests] 
         uses: actions/upload-artifact@v3
         with:
           name: pytest unit test results
           path: ./unit_test_bitcoin.txt
 
       - name: Upload artifact - logging
-        if: always()
-        needs: [Run unit tests] 
         uses: actions/upload-artifact@v3
         with:
           name: pytest unit test results
