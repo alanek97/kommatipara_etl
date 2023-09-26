@@ -25,9 +25,6 @@ jobs:
           spark-url: 'https://archive.apache.org/dist/spark/spark-3.1.1/spark-3.1.1-bin-hadoop3.2.tgz'
       - run: spark-submit --version
       
-      #- name: Install dependencies
-      #  run: pip install -r requirements.txt
-
       - name: Install dependencies
         run: pip install .
 
@@ -55,10 +52,10 @@ jobs:
         run: ls ./dist/
 
       - name: Check distribution file
-        run: check-wheel-contents ./dist/kommatipara*
+        run: check-wheel-contents ./dist/etl_kommatipara*
 
       - name: Download artifact from build job
         uses: actions/upload-artifact@v3
         with:
           name: ETL kommatipara wheel file
-          path: ./dist/kommatipara*
+          path: ./dist/etl_kommatipara*
