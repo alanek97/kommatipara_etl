@@ -20,9 +20,9 @@ jobs:
           distribution: temurin
       - uses: vemonet/setup-spark@v1
         with:
-          spark-version: '3.1.1'
-          hadoop-version: '3.2'
-          spark-url: 'https://archive.apache.org/dist/spark/spark-3.1.1/spark-3.1.1-bin-hadoop3.2.tgz'
+          spark-version: '3.4.1'
+          hadoop-version: '3'
+          spark-url: 'https://archive.apache.org/dist/spark/spark-3.4.1/spark-3.1.1-bin-hadoop3.tgz'
       - run: spark-submit --version
       
       - name: Install dependencies
