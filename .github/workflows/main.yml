@@ -29,7 +29,7 @@ jobs:
         run: pip install .
 
       - name: Run unit tests
-        run: python3 -m pytest tests --doctest-modules --junitxml=./bitcoin_unittest_resoults.txt --log-file=./Bitcoin_dm_log.log
+        run: python3 -m pytest tests --doctest-modules --junitxml=./bitcoin_unittest_resoults.txt
 
       - name: Upload artifact - pytest unit test results
         if: always()

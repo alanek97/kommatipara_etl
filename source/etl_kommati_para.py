@@ -1,6 +1,8 @@
+from pyspark.errors import  PySparkException
 from pyspark.sql import DataFrame, Column
 import logging
 from source.etl_setup import SetupKommatiPara
+
 
 class ETLKommatiPara(SetupKommatiPara):
 
@@ -20,16 +22,24 @@ class ETLKommatiPara(SetupKommatiPara):
         output: DataFrame
 
         '''
-        df = self.spark.read.options(header = True, sep = ',').csv(path)
-        
-        logging.info(f'file was read from: {path}')
-        if self.debbug:
-            logging.info(f'Row count on this step: {df.count()}')
-            logging.info(f'Column count on this step: {len(df.columns)}')
-            logging.info(f'Data Frame schema: {str(df.schema)}')
-        return df
+        try:
+            df = self.spark.read.options(header=True, sep=',').csv(path)
 
-    def t_select_columns(self, df: DataFrame, columns: list, type: str  = 'selected') -> DataFrame:
+            logging.info(f'file was read from: {path}')
+            if self.debbug:
+                logging.info(f'Row count on this step: {df.count()}')
+                logging.info(f'Column count on this step: {len(df.columns)}')
+                logging.info(f'Data Frame schema: {str(df.schema)}')
+            return df
+        except PySparkException as err:
+            logging.error('Pyspark error')
+            logging.error(err)
+            raise
+        except Exception as e:
+            logging.error(e)
+            raise
+
+    def t_select_columns(self, df: DataFrame, columns: list, type: str = 'selected') -> DataFrame:
         '''
         Type of method: transform
 
@@ -85,8 +95,8 @@ class ETLKommatiPara(SetupKommatiPara):
                 [condition] list[Column]
         output: DataFrame
         '''
-        df = df1.join(df2, on = condition, how = 'inner')
-        
+        df = df1.join(df2, on=condition, how='inner')
+
         logging.info(f'Join step. Join on {condition}')
         if self.debbug:
             logging.info(f'Row count on this step: {df.count()}')
@@ -124,13 +134,22 @@ class ETLKommatiPara(SetupKommatiPara):
                 [path] str
         output: csv file 
         '''
-        df.write.mode("overwrite").options(header=True).format('CSV').save(path)
+        try:
+            df.write.mode("overwrite").options(
+                header=True).format('CSV').save(path)
 
-        logging.info(f'Dataframe saved in: {path}')
-        if self.debbug:
-            logging.info(f'Row count on this step: {df.count()}')
-            logging.info(f'Column count on this step: {len(df.columns)}')
-            logging.info(f'Data Frame schema: {str(df.schema)}')
+            logging.info(f'Dataframe saved in: {path}')
+            if self.debbug:
+                logging.info(f'Row count on this step: {df.count()}')
+                logging.info(f'Column count on this step: {len(df.columns)}')
+                logging.info(f'Data Frame schema: {str(df.schema)}')
+        except PySparkException as err:
+            logging.error('Pyspark error')
+            logging.error(err)
+            raise
+        except Exception as e:
+            logging.error(e)
+            raise
 
     def j_bitcoin_datamart(self, input_param: dict) -> None:
         '''
@@ -142,10 +161,16 @@ class ETLKommatiPara(SetupKommatiPara):
         output: csv file
         '''
         df_customers = self.e_source_csv(input_param['customer'])
-        df_cust_filter = self.t_filter_isin_source(df_customers,df_customers.country,input_param['country_flags'])
-        df_cust_flr_select = self.t_select_columns(df_cust_filter,['id', 'email', 'country'])
+        df_cust_filter = self.t_filter_isin_source(
+            df_customers, df_customers.country, input_param['country_flags'])
+        df_cust_flr_select = self.t_select_columns(
+            df_cust_filter, ['id', 'email', 'country'])
         df_transations = self.e_source_csv(input_param['transations'])
-        df_trans_select = self.t_select_columns(df_transations,['cc_n'], type = 'other')
-        df_trans_renamed = self.t_rename_columns(df_trans_select, {'id':'client_identifier', 'btc_a': 'bitcoin_address', 'cc_t': 'credit_card_type'})
-        df_merged = self.t_merge_sources(df_cust_flr_select, df_trans_renamed,  [df_cust_flr_select.id == df_trans_renamed.client_identifier])
-        self.l_export_dataframe(df_merged, input_param['location'] + '/client_data.csv')
+        df_trans_select = self.t_select_columns(
+            df_transations, ['cc_n'], type='other')
+        df_trans_renamed = self.t_rename_columns(df_trans_select, {
+                                                 'id': 'client_identifier', 'btc_a': 'bitcoin_address', 'cc_t': 'credit_card_type'})
+        df_merged = self.t_merge_sources(df_cust_flr_select, df_trans_renamed,  [
+                                         df_cust_flr_select.id == df_trans_renamed.client_identifier])
+        self.l_export_dataframe(
+            df_merged, input_param['location'] + '/client_data.csv')
