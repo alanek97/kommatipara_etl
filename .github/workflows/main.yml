@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, "development" ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: temurin
+      - uses: vemonet/setup-spark@v1
+        with:
+          spark-version: '3.4.1'
+          hadoop-version: '3'
+          spark-url: 'https://archive.apache.org/dist/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz'
+      - run: spark-submit --version
+      
+      - name: Install dependencies
+        run: pip install .
+
+      - name: Run unit tests
+        run: python3 -m pytest tests --doctest-modules --junitxml=./bitcoin_unittest_resoults.txt
+
+      - name: Upload artifact - pytest unit test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest unit test results
+          path: ./bitcoin_unittest_resoults.txt
+
+      - name: Upload artifact - logging
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest unit test results
+          path: ./Bitcoin_dm_log.log
+      
+      - name: Create distribution file
+        run: python3 setup.py bdist_wheel
+
+      - name: Validate folder with distribution file
+        run: ls ./dist/
+
+      - name: Check distribution file
+        run: check-wheel-contents ./dist/etl_kommatipara*
+
+      - name: Download artifact from build job
+        uses: actions/upload-artifact@v3
+        with:
+          name: ETL kommatipara wheel file
+          path: ./dist/etl_kommatipara*
