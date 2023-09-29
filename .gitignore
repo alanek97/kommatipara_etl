@@ -8,3 +8,5 @@ build/
 dist/
 *egg-info
 ti_*.py
+.vscode
+*_old.py
