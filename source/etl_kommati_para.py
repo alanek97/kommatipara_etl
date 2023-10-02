@@ -7,7 +7,7 @@ from source.etl_setup import SetupKommatiPara
 class ExtractKommatiPara():
     def extract_source_csv(self, path: str) -> DataFrame:
         """
-        This function reads CSV file into Spark enviroment.
+        This function reads CSV file into Spark environment.
         Options: header = True, sep = ','
 
         input: [path] str
@@ -36,7 +36,7 @@ class TransformKommatiPara():
     def transform_select_columns(self, df: DataFrame, columns: list, type: str = 'selected') -> DataFrame:
         """""
         This function selects output required columns only.
-        If [type] = 'selected' then only provided columns will be in output (defoult).
+        If [type] = 'selected' then only provided columns will be in output (default).
         If [type] = 'other' then all other columns compare to provided ones will be in output.
 
         input: [df] DataFrame,
@@ -62,7 +62,7 @@ class TransformKommatiPara():
         input: [df] DataFrame,
                 [column] Column,
                 [criteria] list
-        outout: DataFrame
+        output: DataFrame
         """
         df = df[column.isin(criteria)]
 
@@ -120,7 +120,7 @@ class LoadKommatiPara():
             df.write.mode("overwrite").options(
                 header=True).format('CSV').save(path)
 
-            logging.info(f'Dataframe saved in: {path}')
+            logging.info(f'DataFrame saved in: {path}')
             logging.debug(f'Row count on this step: {df.count()}')
             logging.debug(f'Column count on this step: {len(df.columns)}')
             logging.debug(f'Data Frame schema: {str(df.schema)}')
@@ -140,7 +140,7 @@ class JobKommatiPara(SetupKommatiPara, ExtractKommatiPara, TransformKommatiPara,
 
     def job_bitcoin_datamart(self, input_param: dict) -> None:
         """
-        This is coimbained function which exctract 2 files, transformed (select, rename, join) and save it as csv file.
+        This is combined function which extract 2 files, transformed (select, rename, join) and save it as csv file.
 
         input: [input_param] dict
         output: csv file
@@ -150,9 +150,9 @@ class JobKommatiPara(SetupKommatiPara, ExtractKommatiPara, TransformKommatiPara,
             df_customers, df_customers.country, input_param['country_flags'])
         df_cust_flr_select = self.transform_select_columns(
             df_cust_filter, ['id', 'email', 'country'])
-        df_transations = self.extract_source_csv(input_param['transations'])
+        df_transactions = self.extract_source_csv(input_param['transactions'])
         df_trans_select = self.transform_select_columns(
-            df_transations, ['cc_n'], type='other')
+            df_transactions, ['cc_n'], type='other')
         df_trans_renamed = self.transform_rename_columns(df_trans_select, {
             'id': 'client_identifier', 'btc_a': 'bitcoin_address', 'cc_t': 'credit_card_type'})
         df_merged = self.transform_join_sources(df_cust_flr_select, df_trans_renamed,  [

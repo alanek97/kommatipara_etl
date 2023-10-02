@@ -116,7 +116,7 @@ def test_datamart_etl_process():
         shutil.rmtree(path)
 
     test_etl.job_bitcoin_datamart({'customer': "./tests/data/dataset_one_test.csv",
-                                   'transations': "./tests/data/dataset_two_test.csv",
+                                   'transactions': "./tests/data/dataset_two_test.csv",
                                    'country_flags': ['United Kingdom', 'Netherlands'],
                                    'location': os.path.dirname(path)})
 

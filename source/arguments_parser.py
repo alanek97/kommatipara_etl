@@ -11,12 +11,12 @@ class ParserArguments():
         """
         parser = argparse.ArgumentParser(
             prog='job_bitcoin_datamart',
-            description='ETL program for bitcoin datamart creation. Exctract 2 files, combine and save it.')
+            description='ETL program for bitcoin datamart creation. Extract 2 files, combine and save it.')
 
         parser.add_argument(
             '-c', '--customer', help='path for customer file', type=str, required=True)
         parser.add_argument(
-            '-t', '--transations', help='path for transation file', type=str, required=True)
+            '-t', '--transactions', help='path for transaction file', type=str, required=True)
         parser.add_argument('-f', '--country_flags',
                             help='Country names for filter', nargs='+', required=True)
         parser.add_argument('-l', '--location', help='path for output csv file',

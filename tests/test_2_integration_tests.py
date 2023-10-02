@@ -31,11 +31,11 @@ def test_execution_by_command_line(path, options, df_out):
 
     batch_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     customer_path = './tests/data/dataset_one_test.csv'
-    transation_path = './tests/data/dataset_two_test.csv'
+    transaction_path = './tests/data/dataset_two_test.csv'
     country_flags = "'United Kingdom' 'Netherlands'"
 
     os.system(
-        f'python3 {batch_path}/source/__main__.py -c "{customer_path}" -t "{transation_path}" -f {country_flags} ' + options)
+        f'python3 {batch_path}/source/__main__.py -c "{customer_path}" -t "{transaction_path}" -f {country_flags} ' + options)
 
     df_test = test_etl.extract_source_csv(path)
     chispa.assert_df_equality(df_out, df_test, ignore_row_order=True)
